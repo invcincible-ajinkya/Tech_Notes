@@ -1,0 +1,31 @@
+Event Binding : 
+    -In order to have data flow from the template to the class we need to make use of the event binding.
+    -We can listen various events such as mouseclicks keyPress and based on this we can make change in the class logic.
+    -We can also bind the properties on the mouseclicks.
+    -We can also get the information about the current event which has been fired. For ths we have to make use of "$event" variable.
+    -This is a special variable in angular which gives the information about the current event which is fired.
+    -We have to pass the "$event" variable as an argumnts to the function.It will give Access to the DOM events.
+    -We can also assign the code in the event handler in the DOM element itself.
+
+
+    template : `
+    <button (click) = "greetUser($event)">Greet</buton>
+    <button (click) = "Welcome to Angular">Greet</buton>
+
+    <h2>{{printName}}</h2>
+     `
+
+style : [``]
+
+
+  export class TestComponent {
+
+    public printName = "";
+
+    greetUser(event){
+        console.log("Welcome Ajinkya");
+        console.log(event);
+        this.printName = "Ajinkya Pathak";
+    }
+
+  }

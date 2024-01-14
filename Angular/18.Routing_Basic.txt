@@ -1,0 +1,100 @@
+
+Topics:
+  1.Routing & Navigation Basic
+  2.Wild Card Routes, Default Routes ,Redirecting routes
+  3.Readinf and Passing the Route Parameters
+  4.paramMap ans observable
+  5.Optional Route Parameters
+  6.Relative Navigation
+  7.Child Routers
+
+Routing and navigation is nothing but moving between the pages/components of and angular application.
+
+Steps for implementing the routing & navigation into an angular application:
+
+1.Generate the project with the routing option.
+
+  Project created with routing option.   (ng new Employees --routing)  -->we can also use this commad to Generate new application with routing option
+
+Add this tag in index.html
+  <base href="/">
+
+Create a file in app folder
+  app.routing.module.ts
+
+Import the routing module in app.module.ts
+    import { AppRoutingModule } from './app-routing.module';
+    imports: [
+      BrowserModule,
+      AppRoutingModule
+    ],
+
+2.Generate Dept list & Employee List Components.
+
+  ng g c deptList
+  ng g c employeelist
+
+3.Configure the routes for the application.
+
+in app.routing.module.ts
+
+import { DepartmentComponent } from './department/department.component';
+import { EmployeeListComponent } from './employee-list/employee-list.component';
+
+//define all possible routes of an application.
+each route is nothing but an object
+Object consist of a path for the navigation & the component to be rendered to the corrsponding path.
+
+const routes: Routes = [
+
+  { path: "departments", component: DepartmentComponent },
+  { path: "employees", component: EmployeeListComponent }
+
+];
+
+this below is optional
+//this is array of the routing components
+//inorder to avoid the duplication
+// so that we will import this array instead of importing the the components separately
+
+export const routingComponents = [DepartmentComponent, EmployeeListComponent];
+
+in app.module.ts
+
+import { AppRoutingModule, routingComponents } from './app-routing.module';  <---->
+@NgModule({
+  declarations: [
+    AppComponent,
+    routingComponents   <--->
+  ],
+
+
+<router-outlet></router-outlet>
+
+<!-- router view goes here -->
+
+4.Add buttons and use the directives to navigate.
+
+<nav>
+    <a routerLink = "./departments" routerLinkActive = "active">Department List</a>
+    <a routerLink = "./employees" routerLinkActive = "active">Employee List</a>
+</nav>
+
+
+css for the active class
+ styles.css
+       nav a .active {
+      color: #bdbb;
+      }
+
+In order to make the navigation and routing possible through these buttons,
+we need to use the directives from the router package
+1.routerLink directive:
+              This will specify the path to which we want to navigate.
+
+2.routerLinkActive directive:
+              -This directive will specify the one or more classes  to be applied when
+              the corrosponding routerLink is active.
+
+              It means that whenever you will click on the anchor tag/button the claas specified
+              here gets applied.

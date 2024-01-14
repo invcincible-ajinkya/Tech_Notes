@@ -1,0 +1,52 @@
+
+Class Binding:
+  -It is the process of adding/removing class to the DOM element using the property in the class/property binding.
+  -Method_2 below can be used to toggle the class conditionally using the class binding.
+  -Methos_3 is adding the class using the [ngClass] directive, which is the custom attribute provided by angular.
+
+    template : `
+    <h2>Welcome Ajinkya</h2>
+    <h2 class = 'text-success'>To Angular Class Binding</h2>     // regular way of adding class
+    <h2 [class] = 'successClass'>To Angular Class Binding</h2>    //Method_1 // classBinding
+    <h2 class = 'textSpecial' [class] = 'successClass'>To Angular Class Binding</h2>    //When we try to add two classes,it prefers the tradional way of the adding the //we can use any one of the method but can't use both. class                   
+                                                                                          
+    **//Another Method of Adding the class binding by evaluating the exressions      
+    <h2 [class.text-danger] = hasError>Method_2 Class Binding</h2>   //It means that when hasError is true apply the class text-danger
+
+    <h2 [ngClass] = 'messageClasses'>Welcome Ajinkya</h2>     ///use this method_3 when we want to condtionally toggle more than 1 classes
+
+    //It means that it will check the values of the object properties in the class and then it will accordingly apply the classes.
+    //So it change the multiple classes based on the object values.
+    //Now the text-danger class will be applied as it's property value is true.
+
+`
+      styles : [`
+      .textdanger{
+        color : red;
+      }
+
+
+      .textsuccess{
+        color : green;
+      }
+
+      .textSpecial{
+        font-style : italic;
+        color : grey;
+      }
+
+      `]
+
+
+export class TestComponent {
+  pulic successClass = "text-success";    // bind this to the element using thre property binding
+  public hasError = true; 
+  public isSpecial = true; 
+
+  public messageClasses = {
+    "text-danger" : this.hasError,
+    "text-success" : !this.hasError,
+    "text-special" : this.textSpecial
+  }
+
+}

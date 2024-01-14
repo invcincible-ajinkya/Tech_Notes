@@ -1,0 +1,44 @@
+
+Services :
+    A class with a specific purpose.
+    We use it for sharing and providing data between the components.
+    Also for implementing the logic into the application.
+    Also used for external interaction.
+
+    **Steps to create Services in Angular :
+    
+    1.Deifne the EmployeeService Class. (use command "ng g s EmployeeService")
+
+       1a. //create the method to get EmployyeList in service.ts
+
+        getEmployees() {
+            return [
+            { "id": 1, "name": "Ajinkay Pathak", "Company": "Hurix Systems" },
+            { "id": 2, "name": "Amol Daware", "Company": "Atos-Syntel" },
+            { "id": 3, "name": "Ajinkya Pathak", "Company": "Hurix Systems" },
+            { "id": 4, "name": "Ajinkay Pathak", "Company": "Hurix Systems" },
+            { "id": 5, "name": "Ajinkay Pathak", "Company": "Hurix Systems" }
+            ];
+           }
+
+        1b.And initialize the empty array in the employeelist.ts class
+                EMPLOYEES = []
+
+    2.Register the service with th injector.
+
+        2a. app.module.ts
+            import { EmployeeServiceService } from './employee-service.service'
+              providers: [EmployeeServiceService],
+
+
+    3.Declare as the dependancy in the EmployeeList Component. Also known as dependancy injection.
+       
+        EmployeeList.ts
+
+          constructor(private _employeeService: EmployeeServiceService) { }
+            import { EmployeeServiceService } from './employee-service.service'
+
+                ngOnInit() {
+                  this.EMPLOYEES = this._employeeService.getEmployees();
+                }
+

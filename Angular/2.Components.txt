@@ -1,0 +1,95 @@
+ Components:
+    -Basically components are the basic building blocks of the angular applications.
+    -Components is made up of three parts:
+       
+        1.HTML Template:
+            -This represents the view & its made up of the HTML & it will have the application UI.
+        
+        2.A TypeScript Class:
+            -It is the code that supports the view and it is preferred to write it in the TypeScript.
+            -It contains data properties and some methods which can be used to control the view.
+              -For Ex. We can have a method which can be used to change the <div> element color.
+        
+        3. MetaData:
+            -Every component has the metadata attached to it.
+            -Basically it is the information that is used to decide that the typeScript class is general class OR it is an angular component.
+            -We can add the metatdata to the angular application using the decorator function.
+            -A decorator function is the function which provides the information about the class attached to it.
+            -We need to use the '@Component' decorator for defining the angular component.
+            -Component decorator is used for indicating that the claas below is not a plain class it an angular component.
+
+          -So if we consider the app.component.ts file which is nothing but the app-component
+          //Below is the Decorator Function which is a metataData about the app-Component
+
+  MetaData:
+
+            @Component({
+              selector : 'app-root',                    // It is the custom HTML tag which is used to represent the Component
+              templateUrl : './app.component.html',     // It is the template which represents the component view.
+              styleUrl : './app.component.css'          // It is the custom style array used for adding styles to HTML elements.
+            }); 
+
+
+  View/Template: 
+          templateUrl : './app.component.html'
+
+              -It is the template OR the HTML code which represents the component UI.
+              -We can have a inline HTML which is also used to represent the View of the Component. 
+              -For this just replace the templateUrl to => template : `<div> Add the Inline HTML here</div>`
+              -Simillarly we can also have inline styles for the component just by
+               by replacing the styleUrl to the styles : [`div{color : red;}`].
+
+  Class:  
+          export class AppComponent {
+            // Data Properties
+            public property_1 : "";
+
+            // methods
+            sum() {
+
+            }
+          }
+        
+          -So this will be the typeScript class which we can use to add the code which is going to be used for controlling the logic.
+
+          selector : 'app-root'
+            -It is the custom HTML tag which is used for representing the component.
+            -We can add this to add the view of the component at particular place in the angular application.
+            
+        index.html file
+          '<app-root></app-root>' will render our app component view.
+           -So when we run our angular application then the tag above gets replaced by the view of the component. 
+
+      We can generate the new component by using the following command :
+         CMD :   ng g c test  
+         It will generate 4 file in the  app/test/
+          a.test.component.css        //this file represents the styles for this component
+          b.test.component.html       //this file represents the HTML code/ view of the component
+          c.test.component.spec.ts    // this file used for the Unit testing
+          d.test.component.ts         //this file  contains the TS code which is used for writting the logic
+
+        -Whenever we will generate any component angular app should be aware of it.
+        -So we will import the component in the app.module.ts and add the component in the declaretions array. (declarations : []]
+
+        app.module.ts
+
+          import { TestComponent } from './test/tes.component';
+          
+          @NgModule({
+            declaretions : [
+              ....
+              AppComponent
+              TestComponent
+            ]
+          })
+
+        -We can add the <app-test></app-test> in app.component.html as the AppComponent is the root component of our application.
+        -So the AppComponent will be the parent component/Root component of other components.
+    
+
+  selector : '.app-test'
+        -We can modify it to the class like selector : '.app-test'.
+        -And we can use it as the component class  like <div class = '.app-test'> </div>
+
+  selector : [app-test]
+        -So we can use it as the attribute for the element like  <div app-test></div>

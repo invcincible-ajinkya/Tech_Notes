@@ -1,0 +1,28 @@
+
+Till now we  are using the absolute paths for Navigation
+An absolute path is one which starts with the '/' forwarsd slash.
+
+With absolute path we have lack of flexibility.(suppose we want to change the route path then we need to change all the occurences of the path.
+But with help of route navigation we can avoid this.)
+
+so we use relative navigation to avoid above proble
+
+in department-list.ts
+
+onSelect(department){
+
+this.router.navigate([department.id],{relativeTo : this route})
+
+//It means whatever may be the URL. append the departmentId to the current route and then navugate to that URL
+}
+
+
+same in the departDetails.ts
+
+goBack(){
+this.router.navigate(['../'],{selectedId },{relativeTo : this.route})
+
+
+//it means go back to the previous URL and remove the id from URL
+}
+

@@ -1,0 +1,34 @@
+
+//$0 will represent the current element
+
+Property Binding:
+-It is the process of binding the DOM properties with the view.
+
+  Attributes & properties are not same.
+  Attributes are define by the HTML & properties by the DOM.
+  Attributes initializes the properties and their values can't be changed once they are initialized.Property values can be changed.
+
+
+create a new property:
+
+    public myId : "tetsId"
+    public isDisabled : true
+
+So in the HTML:
+
+    <div>
+      <input type = text [id] = "myId" value = "Ajinkya">
+      <input type = text [disabled] = "isDisabled" value = "Ajinkya">
+    </div>
+
+Alternative syntax: 
+
+  use bind-propertyName
+  public myId : "tetsId";
+
+<div>
+  <input type = text [bind-id] = "myId" value = "Ajinkya">
+  <input type = text [bind-disabled] = "isDisabled" value = "Ajinkya">
+</div>
+
+

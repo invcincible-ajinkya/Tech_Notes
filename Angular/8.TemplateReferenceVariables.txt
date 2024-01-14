@@ -1,0 +1,25 @@
+
+Template Reference Variables:
+  -When we want to have some data flow from the template to the class upon some user interaction to perform some operation we can make use of the Template Reference Variables.
+  -So in order to easily access the DOM elements and their properties we can make use of the Template Reference Variables.
+    Following is the syntax for TRV : #variableName
+
+  template : `
+    <input #myInput type = "text">
+    <button (click) = "logMessage(myInput.value)">Welcome</button>
+
+    <h2>{{printName}}</h2>
+     `
+
+style : [``]
+
+
+  export class TestComponent {
+
+    public printName = "";
+
+    logMessage(value){
+      console.log(value);
+    }
+
+  }

@@ -1,0 +1,26 @@
+
+3.ngFor Directive:
+    -Used for rendering the HTML elements repeatedly.
+    -It used for rendering some elements repeatedly like for loop in JS.
+
+template : `
+
+  <div *ngFor = "let color of colors; index as i; fast as f; last as l; odd as o; even as e">
+        <h2> {{i}}  {{f}} {{l}} {{e}} {{o}} {{color}} </h2>
+  </div>
+
+  //This will search for the color value from the source which is colors array for every iteration & it will generate a new h2 element 
+  //index as i is for displaying the index,
+   -fast as f will display true if the element is at fisrt position,
+   -last as l will display true if element is at last position,
+   -odd as o will display true for the odd indexed elements in array,
+   -even as e will display true for the even indexed elements in array.
+
+`
+
+style : [``]
+
+
+  export class TestComponent {
+     public colors = ["Red", "green","Blue","Yellow","Orange","Cyan"];
+  }

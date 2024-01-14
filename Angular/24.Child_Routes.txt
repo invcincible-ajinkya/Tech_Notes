@@ -1,0 +1,48 @@
+
+whenever we want to view a route in another route the we make use use of child routes
+Let suppose we wantr to display info and contact number of each dept then we need to create the child route.
+
+1. geneterate 2 new Components
+
+ng g c departmentoverview
+
+ng g c dept-contact
+
+in app.routing.module.ts
+
+now we need to define the children property to the route to which we want to bind the child routes
+
+
+so in
+const routes : Routes = [
+path :"departments/:id",
+component : DepartmentDetailsComponent,
+children : [
+{path : "overview",component : DepartmentOverviwComponent},
+{path : "dept-contact",component : DeptConatctComponent}
+]
+]
+
+
+Add above components in componentList array and also import them
+
+So for displaying them exactly in the view we make use of the router-outlet directive
+
+so in  department-details.html
+
+<router-outlet></router-outlet>
+
+Add buttons to navigate to child routes
+
+<button (click) = "Overview()"></button>
+<button (click) = "contact()"></button>
+
+
+Overview(){
+this.router.navugate(['overview'],{relativeTo : this.route})
+}
+
+contact(){
+this.router.navugate(['dept-contact'],{relativeTo : this.route})
+
+}

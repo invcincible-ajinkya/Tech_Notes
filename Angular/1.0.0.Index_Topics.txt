@@ -1,0 +1,28 @@
+0.Introduction to Angular
+1.Environment Setup For Angular
+2.Angular Components
+3.Interpolation
+4.Property Binding
+5.Class Binding
+6.Style Binding
+7.Event Binding
+8.Template Reference Variables
+9.Two Way Binding
+10.Structural Directives ---> ngIf
+11.Structural Directives ---> ngSwitch,ngDefault,ngSwitchcase
+12.Structural Directives ---> ngFor
+13.Component Interaction ---> Parent to Child(@Input()) & Child to Parent(@Output() Event Emitter)
+14.Pipes
+15.Creating Custom Pipes
+16.Services
+17.HTTP Communication
+18.Routing Basic Concepts
+19.Wild Card Rotes and Redirection for Routes
+20.Passing & Reading Route Paramaeters
+21.ParamMap & observables
+22.Optional Route Parameters
+23.Relative Navigation
+24.Child Routes
+25.CRUD operations
+26.Template Driven Forms
+27.Reactive Forms

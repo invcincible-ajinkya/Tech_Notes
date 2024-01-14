@@ -1,0 +1,55 @@
+Structural Directives:
+-Structural directives can add or remove the elements from the DOM.
+
+
+1.ngIf Directive:
+    -Used for condtionally rendering element in the DOM.  syntax : *ngIf
+
+template : `
+        <h2 *ngIf = "true">Ajinkya Pathak</h2>
+        //when ngIf is true element is present, if false then it will be removed from the DOM.
+
+        <h2 *ngIf = "displayName">Ajinkya Pathak</h2>
+        //When property is true, element is displayed, if false then it will not be displayed.
+        //So we can add & remove the elements from the DOM by toggling the property value.
+
+        **//Adding else block to the if condition
+
+      <h2 *ngIf = "displayName; else elseBlock">Ajinkya Pathak</h2>
+      
+      <ng-template #elseBlock>
+        <h2>
+          Name is Hidden
+        </h2>
+      </ng-template>
+
+      //It means that whenever displayName is true the name will be displayed else the "Name is Hidden" will be displayed.
+      //<ng-template #elseBlock>  </ng-template> acts as an wrapper for other elements.
+
+      //We can have the ngIf directive in separate block
+
+      <div *ngIf = "displayName; then #thenBlock; else elseBlock"></div>
+
+      <ng-template #thenBlock>
+        <h2>
+          Ajinkya Pathak
+        </h2>               
+      </ng-template>
+
+
+      <ng-template #elseBlock>
+        <h2>
+          Name is Hidden
+        </h2>
+      </ng-template>
+
+      //It means that we can add the ngIf directive in the separate blocks
+      //Above syntax means that when displayName is true then display thenBlock else display elseBlock.
+     `
+
+style : [``]
+
+
+  export class TestComponent {
+     public displayName = true;
+  }

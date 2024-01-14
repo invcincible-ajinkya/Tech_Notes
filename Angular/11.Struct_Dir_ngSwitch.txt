@@ -1,0 +1,24 @@
+
+2.ngSwitch Directive:
+    -Used for condtionally render element in the DOM.
+    -We can use the ngSwitch directive when we have to compare between the multiple values.
+
+
+template : `
+
+  <div [ngSwitch] = "color">
+      <div *ngSwitchcase = "red">Red Color Choosen</div>
+      <div *ngSwitchcase = "Yellow">Yellow Color Choosen</div>
+      <div *ngSwitchcase = "Blue">Blue Color Choosen</div>
+      <div *ngSwitchDefault>Plz pick correct Color </div>
+  </div>
+
+`,
+
+style : [``],
+
+  export class TestComponent {
+     public color = "red";
+
+  }
+    

@@ -1,0 +1,16 @@
+    Environment Setup : 
+
+      1.Install node.js globally : 
+        -npm install -g node
+
+       Check the node version
+        -node -v 
+
+      2.Install angular cli globally on local machine : 
+        -npm install -g @angular/cli
+
+      3.Create new angular Application : 
+          -ng new apllication_name
+
+          -ng g c componentName
+          -ng g s serviceName

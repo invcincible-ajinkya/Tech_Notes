@@ -1,0 +1,73 @@
+
+Component Interaction:
+  -It is nothing but having two way communication from one component to another.
+  -AppComponent is the parent component & TestComponent is the child component as it is added inside AppComponent.
+  -So in order to communicate between each other components make use of @input(child can recieve input from parent) & @output(child can send data to the parent) decorators.
+
+  in app.component.ts
+
+  public name = "Ajinkya Pathak";
+
+  in app.component.html
+  
+  <app-test [parentData] = 'name'></app-test>
+  //it means that we are sending data from parent component to the child component.
+
+
+  in test.component.ts
+
+  template : `
+      <h2>{{parentData}}</h2>
+      //by this way we can display data from parent to child
+
+      <h2>{{name}}</h2>
+      //this will also display the same data from the parent
+  `
+
+  class TestComponent {
+
+    // the following decorator function will tells that its not a normal property its data from the parent
+    @Input()
+    public parentData;
+
+    @Input('parentData')
+    public name;
+    //It means that we are giving the another name to the parentData property in this component
+
+  }
+
+
+sending data from child to parent we can make use of the  events
+
+    in test.component.ts
+    create the instance of event emmiter
+
+    template : `
+
+  <h2></h2>
+  <button (click) = "fireEvent()">Send to parent</buton>  
+    
+    `
+class TestComponent{
+
+   @output() public childEvent = new EventEmitter();      //we need to import it from '@angular/core' 
+
+    fireEvent() {
+      this.childEvent.emmit("Hello from Child");
+    }
+}
+
+
+//capture this event in the parent component
+
+app.component.html
+
+{{message}}    ///bind the property in the view
+
+<app-test  (childEvent) = "message = $event"></app-test>
+
+
+in app.component.ts
+
+public message = '';
+

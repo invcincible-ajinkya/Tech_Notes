@@ -1,0 +1,66 @@
+
+When We want to navigate back to the Deparatment List Component we need A back button
+So whenever we will go back department list component we have to shoow dept list with previously selected department.
+
+so in departdetails.html
+1.Add a back button and assign onclick handler to it
+
+
+<a click = "goBack()">Back</a>
+
+
+department-details.component.ts
+
+goBack() {
+let selectedDepartmentId = this.selectedDeptID ? this.selectedDeptID : null;
+
+this.router.navigate(['/departments'.{id : selectedDepartmentId}])
+
+//{id : selectedDepartmentId } is optional parameter because its existance does not affect view.
+But we can use them to apply some logic.
+So we will use this to highlight the selected dept by reading the id and comparing with ids in list of dept
+
+}
+
+
+department-list.component.ts
+
+1. import { ActivatedRoute } from '@angular/route';   ---> we make use of it on order to read route para and display it in the view.
+
+2.inject it into the constructor in order to have instance
+
+constructor( private route : ActivatedRoute){
+
+}
+
+
+ngOnInit(){
+// retrieve the id using paramMap Api observable
+
+this.route.paramMap.subscribe((params: paramMap) =>{
+let id  = parseInt(params.get('id'))
+  this.selectedDeptId = id   /// also declare this property
+});
+
+}
+
+3.compare it with other ids in departments List
+
+isSelcted (department){
+return department.id === this.selectedDePtId;
+}
+
+now add class in html
+
+<li ..... [class.selelcted] = "isSelcted (department)">
+
+in class
+
+li .selected{
+//chamge fontcolor n bg fontcolor
+}
+
+IMP
+OPtional parameter doent need placeholder
+we can pass as many parameters we want
+

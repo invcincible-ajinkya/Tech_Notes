@@ -1,0 +1,56 @@
+
+HTTP Request Steps:
+1.HTTP get request from EmployeeService class
+
+    app.mmodule.ts
+
+    import { HttpClientModule } from '@angular/common/http';
+    
+    Add the HttpClientModule to the imports array.
+        imports: [
+            BrowserModule,
+            HttpClientModule,
+            AppRoutingModule
+        ],
+
+    employee.service
+
+        import { HttpClient } from '@angular/common/http';
+              constructor(private http: HttpClient) { }     //dependency injection
+
+    Make a get request in the ngOnInit()
+        return this.http.get(this._url)
+
+
+
+2.Recieve observable ans cast into EmployeeArray
+
+    to cast observable create an interfcae
+
+        /app/employee.ts
+
+            export interface IEmployee {
+            id: number,
+            name: string,
+            company: string
+        }
+
+    import { IEmployee } from './employee';
+    import { Observable } from 'rxjs/Observable';
+
+    getEmployees(): Observable<IEmployee[]> {
+            return this.http.get<IEmployee[]>(this._url);
+    }
+
+
+
+3.Subscribe to observable in the from EmployeeList.
+
+        this._employeeService.getEmployees()
+        .subscribe(data => this.EMPLOYEES = data);
+    
+
+4.Assign the Employee Array to the Local Variable
+
+        data => this.EMPLOYEES = data
+

@@ -1,0 +1,97 @@
+Steps:
+
+1.Change the Dpartlist component by adding name and id to the object of the data
+
+[
+      {
+        id: 1,
+        "name": "Angular"
+      },
+      {
+        id: 2,
+        "name": "React"
+      },
+      {
+        id: 3,
+        "name": "Vue"
+      },
+      {
+        id: 4,
+        "name": "Mongo"
+      },
+      {
+        id: 5,
+        "name": "Java"
+      }
+    ];
+
+2.Generate Department Details Component
+
+ng g c DepartMentDetails
+
+in app.routing.module.ts
+    import { DepartmentDetailsComponent } from './department-details/department-details.component';
+
+    //Add the object in the route array
+
+    { path: "departments/:id", component: DepartmentDetailsComponent },
+
+      "departments/:id"  ---> placeholder for the route Parameters. As we want to pass the id  so it named as "/:id"
+
+3.Navigate to the route when we click on any department
+
+in departmentList.html
+
+    <li (click) = onSelect(dept)  *ngFor = "let dept of DEPARTMENTS">   //bind an onClick event for navigation
+
+    in departmentList.ts
+
+    import { Router } from '@angular/router';   ---> Added for writting the routing logic
+
+    constructor(private _deptService: DepartmentService, private router: Router) { }  ---> inject it in constructor
+
+    onselect(department) {
+
+     //in this method we will navigate through the code
+     //so we wiil make use of navigate() method.
+     //argumnts to above method is link parameters array
+     //This is the information that angular need to construct the URL.
+
+        //1.[/departments] ---> it is the path that we want to navigate
+        //2.department.id --> It is the route parameter that we want to read/pass
+
+    this.router.navigate(['/departments',department.id]);
+
+
+ }
+
+ DepartMentDetails.ts
+
+1. import { ActivatedRoute } from '@angular/route';   ---> we make use of it on order to read route para and display it in the view.
+
+2.inject it into the constructor in order to have instance
+
+constructor( private route : ActivatedRoute){
+
+}
+
+3.in ngOnInit(){} read the route para
+
+
+ngOnInit(){
+  //route service gives snapshot of currentRoute.
+  // from this snapshot we use parammap api which help to get parameter from the URL
+  //so in get method we will get the id parameter which we want.
+
+  let id = parseInt(this.route.snapshot.paramMap.get('id'));
+
+// assign the parameter to local variable.
+  public departmentId = id;
+}
+
+
+4.now change the view / html
+
+in DepartMentDetails.html
+
+<h3> You selected the department with id = {{ departmentId }} </h3>

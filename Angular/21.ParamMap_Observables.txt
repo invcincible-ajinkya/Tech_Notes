@@ -1,0 +1,74 @@
+Drawback:
+
+  Add two button prev and next
+
+  Create two:  DepartMentDetails.html
+
+              <a (click) = prev()> Prev </a>
+              <a (click) = next()> Next </a>
+
+Write the navigate methods to navigate through the code
+
+DepartMentDetails.ts
+
+
+1. import { ActivatedRoute,Router } from '@angular/route';   ---> we make use of it on order to read route para and display it in the view.
+
+2.inject it into the constructor in order to have instance
+
+constructor( private router : Router){
+
+}
+
+3.in ngOnInit(){} read the route para
+
+
+ngOnInit(){
+  //route service gives snapshot of currentRoute.
+  // from this snapshot we use parammap api which help to get parameter from the URL
+  //so in get method we will get the id parameter which we want.
+
+  let id = parseInt(this.route.snapshot.paramMap.get('id'));
+
+// assign the parameter to local variable.
+  public this.selectedDeptID = id;
+}
+
+
+
+
+prev(){
+
+let prevId = this.departmentId - 1;
+// now pass the id as parameter
+
+this.router.navigate(['/departments',prevId])
+}
+
+
+
+next(){
+
+let nextId = this.departmentId + 1;
+// now pass the id as parameter
+
+this.router.navigate(['/departments',nextId])
+
+}
+
+
+if we make use prev and next button the URL of the application changes but the value in the view doesnot change
+This is the main drwaback of the snapshot approach.
+It will not work when we are navigating from one component to other and back to same component again. It fails
+So ngOnInit(){} does nt get called every time.
+
+So to overcome this we need to make use of paramMap observable approch
+
+
+so in
+ngOnInit(){
+  this.route.paramMap.subscribe((params: paramMap) =>{
+  let id  = parseInt(params.get('id'))
+    this.selectedDeptID = id
+  });
+}

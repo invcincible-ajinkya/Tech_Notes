@@ -1,0 +1,52 @@
+Pipes :
+  Pipes in angular are used for transforming data before displaying it in the view.
+  There are many pipes available in the angular.
+  It transforms the value for the view but it doesnot chamge the property values.
+
+template : `
+
+//for string
+
+<h2>{{ name | lowercase }}</h2>    //ajinkya
+<h2>{{ name | uppercase }}</h2>     //AJINKYA
+<h2>{{ message | titlecase }}</h2>    Welcome To Angular
+<h2>{{ name | slice:3 }}</h2>     //NKYA
+<h2>{{ name | slice:3:5 }}</h2>     //NK
+<h2>{{ person | json }}</h2>     //NK
+
+
+//for numbers
+
+<h2>{{ 0.25 | percent }}</h2>     //0.25%
+<h2>{{ 0.25 | currency }}</h2>     //$0.25  By Default US Dollars
+<h2>{{ 0.25 | currency: 'GBP' }}</h2>     //$0.25
+<h2>{{ 0.25 | currency: 'GBP' : 'code' }}</h2>     //GBP 0.25
+
+//for Dates
+
+<h2>{{ date }}</h2>    //current Date n time
+<h2>{{ date | date:'short' }}</h2>    //current Date n time in short format
+<h2>{{ date | date:'shortDate' }}</h2>    //current Date n time in short format
+<h2>{{ date | date:'shortTime' }}</h2>    //current Date n time in short format
+<h2>{{ date | date:'medium' }}</h2>    //current Date n time in short format
+<h2>{{ date | date:'medium' }}</h2>    //current Date n time in short format
+
+`,
+
+
+styles : [``],
+
+ class TestComponent {
+
+   public name = "Ajinkya Pathak";
+   public message = "Welcome to angular";
+   public person : {
+
+     firstName : "Ajinkya",
+     lastName : "Pathak"
+
+   }
+
+   public date = new Date();
+
+ }

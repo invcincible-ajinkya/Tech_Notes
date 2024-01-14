@@ -1,0 +1,149 @@
+Create new Application for CRUD oprations.
+
+   npm install --save bo    otstrap     ---------intalling bootstrap in current application.
+
+   in angular-cli.json add the file path of the bootstrap file in order to make use of the bootstrap.css
+
+
+   "styles" : [
+     "styles.css",
+     "../node_modules/bootstrap/dist/css/bootstarp.min.css"
+   ]
+
+
+  -add the component UI.
+
+  We can also need to rebuild application as we have changes in the application. So for this we will make use fo the  following 
+  command:
+            ng build
+
+
+  Step1:
+    -Create a service for fetching data from DB and the handle all the CRUD operations.
+    -Make use of the http service for fetching the data from the Database.
+
+    1.Get the Data:
+
+        in productList-service.ts
+          import {Http} from '@angular/core';
+
+    Make instance of the Http service
+          constructor(private _http : Http){
+          } 
+
+    Declare a property which will represent the URl for fetching the products-list.
+          private _getUrl = "/api/productList";
+
+    Define method to get list
+
+      getProductsList(){
+        return this._http.get(this._getUrl)
+        .map((response : Response) => response.json());
+      }   
+
+    It make use of http insatnce to fetch the products-list. Then we will call GET/get method and will pass the
+    _getUrl as an parameter. We have to get the response and then map it into the json file.
+
+    So for this we will make use of make of map.So import following:
+      import(Response) from '@angular/core';    -->import response
+      import 'rxjs/add/operator/map';     -->import map
+
+
+    Now subscribe to the service in list.component.ts
+
+      productList = Array<Product>;   //where as Product is the model class.
+
+      constructor(private _listService : productList-Serivce) {
+        }
+
+      ngOnInit() {
+        this._listService.getProductsList()
+        .subscribe(resData => this.productList = resData)
+      }
+ 
+
+
+
+ 2.Post the Data : 
+
+  Create a button to add a new record. Now add the angular form to add the fields of the table in database.
+
+  Now in productList-service.ts
+    In order to make use of POST method we need http headers and the requestOptions. So import them:
+      import {Headers,RequestOptions} from '@angular/core';
+
+    Declare the Url to make post request:
+      private _postUrl = "/api/list";
+
+    Now add the method:
+
+      addProduct(product : Product) {
+        //first use headers which will be sent over the network which define the Content-Type as json.
+          let headers = new Headers({'Content-Type' : 'application/json'});
+
+          //now make instance of requestOptions which take headers as argument
+          let options = new RequestOptions({headers : headers});
+           
+           //now invoke the post method and pass the url to it. Convert the object into string.
+            return this._http.post(this._postUrl,JSON.stringify(product), options)
+
+            //now after inserting the product we get the response which we need to map into json
+            .map((response : Response) => response.json());
+      } 
+ 
+    So when we submit the form we need to get the from values and then we need to call event handler
+        So in product.html
+            <from (ngSubmit) = "onSubmittingFromAddProduct(from.value)">
+            //.....
+            .....
+            .....//
+            </from>
+
+            so in product.component.ts
+
+            onSubmittingFromAddProduct(product : Product) {
+            this._product-listService.addProduct(product)
+              .subscribe(resNewProduct => {
+                this.productsList.push(resNewProduct);
+                this.selectedProduct = resNewProduct;
+              });
+            }
+ 
+ 
+  3.Update Product
+    private _putUrl = "api/update";
+
+    Add method to update the product
+
+      updateProduct(product : Product) {
+             //first use headers which will be sent over the network which define the Content-Type as json.
+          let headers = new Headers({'Content-Type' : 'application/json'});
+
+          //now make instance of requestOptions which take headers as argument
+          let options = new RequestOptions({headers : headers});
+           
+           //now invoke the post method and pass the url to it. Convert the object into string.
+            return this._http.put(this._putUrl + product._id,JSON.stringify(product), options)
+
+            //now after inserting the product we get the response which we need to map into json
+            .map((response : Response) => response.json());
+      }
+
+    Add the UI to call this method.
+    Add the button to call the updateProduct method
+    <button (click) = "updateProduct()">Update</button>
+
+    in product-Details.component.ts
+
+  updateProductEvent = new EventEmitter();
+
+    updateProduct() {
+      this.updateProductEvent.emit(this.product);
+    }
+ 
+
+ 4.Delete product
+
+ in product-list.service.ts
+      private _deleteUrli = "api/delete";
+ 

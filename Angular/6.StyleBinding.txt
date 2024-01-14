@@ -1,0 +1,29 @@
+
+Style Binding:
+    1.It is used for applying the inline styles to the HTML elements.
+    2.It is possible to add the style property based on some condition.
+    3.We can also add the component properties to the HTML element style.
+    4.We can also apply multiple styles at a time by using the [ngStyle] directive. It also make use of the object like ngClass.
+
+  template : `
+      <h2 [style.color] = "'red'">Ajinkya Pathak</h2>                                   //Method1
+      <h2 [style.color] = "hasError ? 'red' : 'green'">Conditional Inline Style</h2>    //Method2
+      <h2 [style.color] = "highlightColor">Component Property as a style</h2>           //Method3
+      <h2 [ngStyle] = "titlStyle">ngStyle Directive</h2>                                //Method4
+  `
+
+style : [``]
+
+
+  export class TestComponent {
+
+    pulic successClass = "text-success"; 
+    public hasError = true; 
+    public isSpecial = true; 
+    highlightColor = 'orange';
+
+    titlStyle : {
+      color : "blue",
+      fontStyle : "italic"
+    }
+  }

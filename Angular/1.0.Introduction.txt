@@ -1,0 +1,7 @@
+      Angular is framework for building client side applications.
+      It is specially used for building the Single Page Application in which parts of application get distributed and they get refreshed asynchronously without refreshing the web page.
+
+    Angular Architecture:
+
+      Module:
+        -Angular Applications contains

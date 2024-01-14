@@ -1,0 +1,21 @@
+
+Interpolation: syntax <---> {{...}}
+      -Interpolation is the syntax used in the angular for defining the property.
+      -We can evaluate the value inside the component and render it in the view as the page loads.
+      -It is the way of binding the data from the class to the template.
+
+      -So let Suppose we want to display a name using the interpolation
+          
+          <div>  Wecome to {{title}} </div> 
+
+          public title : "AJinkya..Pathak...";
+      
+      -We can also use the interpolation for
+        1.Expressions : {{2+2}}
+        2.string concatination :  {{"Welcome" + title}}
+        3.Adding JS methods  :  {{title.lenth}} / {{title.toUpperCase()}}
+        4.We can also use the method in the component :  {{title.welcome()}}
+
+    Limitations :
+        -Assignment is not possible :  {{a = 1+1}}    ///error
+        -Access to global variables is not possible : {{window}}  //error

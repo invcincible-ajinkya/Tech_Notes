@@ -1,0 +1,292 @@
+
+  -We use angular forms to create an experience that guides the user efficiently throughout the workflow.
+    We can perform following operations in angular forms:
+      -Data binding.
+      -Change tracking.
+      -Validation.
+      -Visual Feedback. 
+      -Error messages. 
+      -Form Submission.
+
+    -Component template contains HTML element to collect data.
+    -Component class handles data binding.
+    -Collected data is sent to the server using service.
+
+
+1.Template Driven Forms:
+   
+    - Most of the data processing / most of the code is written in the template/view(html file) so called as TDF.
+    - Mostly we need to use the Two way data binding.
+    - Bulky HTML code is present where as there will be very small code in the class.
+    - With the help of [(ngModel)] and [(ngForm)] directives we can match the data from template to the class and also we can track the form.
+    - Also with help of this we can track element state and the validity.
+      Unit testing of form validation logic is difficult.So we need to run the code to test.
+      When we add more validations logic it becomes very difficult to read the form data.
+      So we need to use the TDF for simple HTML forms.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+      We need to use the tag <form></from> for adding the form.      
+
+                    <form>
+                      
+                      <label>Name</label>
+                      <input type = 'text'>
+                      
+                      <label>Email</label>
+                      <input type = 'email'>
+
+                      <label>Phone</label>
+                      <input type = 'phone'>
+
+                      <button type = 'submit'>Submit Form</button>
+                    
+                    </from>  
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Data Binding with the form fields:       
+      
+        Steps:
+      1.import the Froms module in app.module.ts and add it in the imports array.
+            
+              import {FormsModule} from '@angular/forms';
+
+              imports: [
+                        BrowserModule,
+                        FormsModule
+                      ],
+
+    Whenever we use the  "<from></from>" tag angular will automatically add the "ngForm" directive to the form.
+    So we can get the Reference to this directive with help of TRV. 
+
+      <form #ngForm = 'ngForm'>
+        //ngForm directive exports itself as the ngForm and due to TRV we have ref of the variable.
+
+          <label>Name</label>
+          <input type = 'text'>
+          
+          <label>Email</label>
+          <input type = 'email'>
+
+          <label>Phone</label>
+          <input type = 'phone'>
+
+          <button type = 'submit'>Submit Form</button>
+      
+      </from> 
+
+    We can get the values from the form field with help of 'value' property.
+   
+    So --->   {{userForm.value | json }} 
+
+    We need to use ngModel directive to keep track of the form fields which we want to keep track.
+
+    So add ngMOdel directive to the elements. So this will gives us the form field values. Also ngModel doesnt work alone we need to add the name attribute with ngModel.
+
+         <label>Name</label>
+        <input type = 'text' ngModel name = 'username'>
+    
+    After this as soon as we start adding the fields the object in the template starts updating.
+    'ngModelGroup' directive is used when we want to add group of the various field as a single object.
+    So let suppose we have different fielDs like city, state etc so that we will use the ngModelGroup directive for this.
+    
+
+    <div ngModelGroup = 'adress'>
+    
+    ////add the address fields like city,lane state etc.
+    
+    </div>
+
+    So this will represent all the address fields as a sinle object having individual properties in it.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Binding the form data model: 
+
+    Generate a model class.
+
+     "ng g class user" --> It will create a class that we need to add different properties that we need to bind from the form fields.
+
+
+     export class User{
+        constructor(
+            public name : string;
+            public email : string;
+            public phone : number;
+            public topic : string;
+        ){ }
+
+     }
+
+    Now create the instance of the model
+
+      in app.component.ts
+      
+        userModel = new User("Ajinkya","ajinkya@twst.com",123,"Angular Forms");
+    
+    So we can now bind the user model data to the form. 
+      For Ex.As in SignUp form we have prefilled form fields. So this can be achieved with the model data to add in form fields by above method.
+
+      We can implement this by using the property binding.
+
+      So create the interpolation for user object property.
+
+          {{ userModel | json }}
+
+      And now add the property binding to each form field. Replace the ngModel with [ngModel] = ''
+    
+        <label>Name</label>
+        <input type = 'text' [ngModel] = 'userModel.name'>
+
+        //similarly for all fields
+
+      But this will change only form fiels values of angular object not the userModel values. So in order to change both we need to use the two way binding to have data flow control from view to model and model to view.Replace the ngModel with [(ngModel)] 
+
+        <label>Name</label>
+        <input type = 'text' [(ngModel]) = 'userModel.name'>
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Track Control state & validity : 
+
+  To have the track and state control angular make use following 3 classes.
+
+  If the control visted  ----> ng-touched class ----> else ng-untouched
+  If the form field changed ----> ng-dirty   -----> else ng-pristine
+  if control value is valid  -----> ng-valid  ----> else ng-invalid 
+
+
+    <label>Name</label>
+    <input type = 'text' required #name [ngModel] = 'userModel.name'>
+
+    {{name.className}}   ///this will show the classes that are applied.
+    //'required' attribute is added to test the validity of the object.
+
+    We can make use of properties instead of classes.
+
+    touched,untouched,pristine,dirty,valid,invalid.
+
+    So in order to have the instance of from control we need to assign the value to the name trv == ngModel" 
+
+      
+    <label>Name</label>
+    <input type = 'text' required #name = "ngModel" [ngModel] = 'userModel.name'>
+
+    {{name.touched/untouched/valid,invalid,dirty,pristine}}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Validation with Visual Feedback:
+
+    We can add the Visual Feedback in 2 ways:
+        1,With our own messageClasses
+        2.Using css framework classes
+
+            <label>Name</label>
+           <input type = 'text' required #name [ngModel] = 'userModel.name && name.touched' [claa.is-invalid] = 'name.invalid'>
+
+        //this means that whenever the class ref var property name is invalid then apply class "is-invalid and when user hhas touched it."
+        We can also use the various RegExp to validate the form controls.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Displaying Errror Messages: 
+
+      When there is no form field added and we try to submit the form we need to display the error messages.
+      So create a error message in html:
+
+          
+            <label>Name</label>
+           <input type = 'text' required #name [ngModel] = 'userModel.name && name.touched' [claa.is-invalid] = 'name.invalid'>
+           <small [class.d-none] = 'name.valid && name.untouched' class = 'text-danger'>Name is Required</small>
+
+            //It means that dont shoow error message when name is valid OR untouched
+            'text-danger'  ---> bootstrap class for red text
+
+            we can also add multiple condtiond validation for the form controls using the ngIf
+            <div *ngIg = "phone.errors && (phone.invalid || phone.touched)">
+                <small class ='text-danger' *ngIf = 'phone.errors.required'>Phone Required</small>
+                <small class ='text-danger' *ngIf = 'phone.errors.pattern'>Phone must be 10 digits</small>
+                
+                <small></small>
+            </div>
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Form Validation:
+
+      Whenever we create angular form angular creates a  ngForm directive which we can refer with help of template Reference variable.
+      We can have all the properties same as that of ngModel directive.
+      So we can have the access to a form control like:
+
+          {{ userform.form.valid }}
+          //it will return true when form is valid.
+      
+      We can disable the submit button until the form is invalid.
+
+      <button [disabled] = 'userform.form.invalid '>type = 'submit'>Submit Form</button>
+        //dissabled is the bootstrap class 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Submitting the form Data:
+
+      Add the novalidate attribute to the <from></form> tag in order to avoid browser validations interferring when we will click the Submit button.
+              <form #userform  = 'ngForm' novalidate (ngSubmit) = 'onSubmit()'>
+            //ngOnsubmit() is invoked whenever we will click/try to post our data over the network.
+              So it will be added into the app.component.ts class
+
+      We need to add the service in order to send the daata to the server.
+      So generate the service using the cli -- "ng g s enrollment"
+      Add all necessary steps to make service like importing http client & add to imports array.
+      Add the property for the url
+
+        in enrollment service.ts   
+            _postUrl = "http://localhost:3000/postData";
+
+        Add the method to post the data which will also make the http post request
+        Here User is the model class used for the casting the responce 
+
+        postData( user : User) {
+            retutn this._http.post<any>(this._postUrl, user);    
+        }
+
+      in app.component.ts we need to recieve the responce which is in the form of the observables.
+      So first import the service 
+          
+          import(EnrollmentService) from '../enrollment.service';
+      inject it in constructor  
+           public constructor(_enrollmentService : EnrollmentService)(){}
+      So now onSubmit subscribe to the observables
+
+        onSubmit() {
+          this._enrollmentService.postData(this.userModel)
+          .subscribe(
+            data => console.log(data);
+            error => console.error(error);
+          )
+        }
+
+ 
+**We need the simple express server to post data ----> skipped the video for creating the simple server.
+
+Whenever form will be submitted it is necessary to hide the form which make us feel of form being submitted.
+
+    so create the property      
+
+    _submitted = false;
+    
+    So we will make true Submitting the form
+
+     onSubmit() {
+        this._submitted = true;
+    }
+
+    <form  *ngIf = '!submitted'> 
+    it means display until it is not submitted then hide it.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+    
+
+Form Error Handling :

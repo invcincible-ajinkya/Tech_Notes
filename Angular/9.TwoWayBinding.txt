@@ -1,0 +1,19 @@
+
+Two Way Binding:
+  -When we are using the Forms it is necessary to have the view & model in sync with each other else, there will be data inconsistancy problem.
+  -So whenever user changes any property in class it must reflect in the view & if user changes/modifies anything in view its related property in class must change in accordance with that.
+  -So we can make use of TWB to change display property in the view whenever there is change in the class property & vice-versa.
+  -For this we can use angular "ngModel" directive.    syntax :  [(ngModel)]     
+  -Due to this value flows from the Template/View to Class/Model and From Model to the View/Template.
+  
+template : `
+    <input [(ngModel)] = "name" type = "text">
+    {{name}}
+    `
+
+style : [``]
+
+
+  export class TestComponent {
+      public name = "";
+  }
